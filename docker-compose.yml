@@ -1,0 +1,32 @@
+services:
+  ros2-vnc-ws1:
+    image: ghcr.io/wing-kit/neo_humble:latest
+    platform: linux/amd64
+    ports:
+      - "0.0.0.0:36081:80"
+      - "0.0.0.0:32221:22"
+      - "0.0.0.0:33081:8080"
+    cap_add:
+      - NET_ADMIN
+    shm_size: '16g'
+    security_opt:
+      - seccomp:unconfined
+    container_name: ros2-humble
+    volumes:
+      - ~/projects/aic_swarm/ros2_workspaces/ws1:/home/ubuntu/ros2_ws
+      - ~/projects/aic_swarm/ros2_workspaces/shared:/home/ubuntu/shared
+      - ~/projects/aic_swarm/ros2_workspaces/shared/nginx-conf/doc.conf:/etc/nginx/conf.d/doc.conf
+    environment:
+      - USER=ubuntu
+      - PASSWORD=123456   # ← CHANGE TO YOUR STRONG PASSWORD
+    entrypoint: ["/bin/bash", "-c"]
+    command: |
+      "mkdir -p /var/run/sshd && rm -rf /home/ubuntu/ws_* &&
+       sed -i 's/#PasswordAuthentication yes/PasswordAuthentication yes/' /etc/ssh/sshd_config &&
+       sed -i 's/#PermitRootLogin prohibit-password/PermitRootLogin no/' /etc/ssh/sshd_config &&
+       /usr/sbin/sshd -D &
+       chmod +x /home/ubuntu/shared/tools/easytier-linux-x86_64/easytier-core &&
+       chmod +x /home/ubuntu/ros2_ws/easytier/start.sh &&
+       /home/ubuntu/ros2_ws/easytier/start.sh &
+       /usr/bin/redis-server &
+       exec /entrypoint.sh"
