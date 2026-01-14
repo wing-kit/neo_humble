@@ -37,11 +37,17 @@ After about a minute you should be able to use your host browser to visit http:/
   source /usr/share/gazebo/setup.sh
   source /opt/ros/humble/setup.bash
   colcon build --symlink-install
-  source /home/ubuntu/shared/neobotix_workspace/install/setup.bash
   ```
+
+  Successful build should look like:
+![WhatsApp Image 2026-01-14 at 12 14 12](https://github.com/user-attachments/assets/0cb1c4c3-2941-49c0-b364-17264b4b8fbf)
+
 
 2. Run the example simulator
    ```
+   source /usr/share/gazebo/setup.sh
+   source /opt/ros/humble/setup.bash
+   source /home/ubuntu/shared/neobotix_workspace/install/setup.bash
    ros2 launch neo_simulation2 simulation.launch.py my_robot:=mpo_700 world:=neo_workshop
    ```
 
@@ -51,4 +57,7 @@ After about a minute you should be able to use your host browser to visit http:/
 
 
 ### Take down
+
+Before taking down the container please note that ONLY ~/shared and ~/ros2_ws are persistant to your host. All other files would be gone. Be careful.
+
 `docker compose down --remove-orphans`
