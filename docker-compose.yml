@@ -18,6 +18,8 @@ services:
       - ~/projects/aic_swarm/ros2_workspaces/ws1:/home/ubuntu/ros2_ws
       - ~/projects/aic_swarm/ros2_workspaces/shared:/home/ubuntu/shared
       - ~/projects/aic_swarm/ros2_workspaces/shared/nginx-conf/doc.conf:/etc/nginx/conf.d/doc.conf
+      - ~/projects/aic_swarm/xsession:/home/ubuntu/.xsession
+      - ~/projects/aic_swarm/xrdp.ini:/home/ubuntu/xrdp.ini
     environment:
       - USER=ubuntu
       - PASSWORD=123456   # ← CHANGE TO YOUR STRONG PASSWORD
@@ -32,4 +34,4 @@ services:
        chmod +x /home/ubuntu/ros2_ws/easytier/start.sh &&
        /home/ubuntu/ros2_ws/easytier/start.sh &
        /usr/bin/redis-server &
-       apt update && apt install xrdp xorgxrdp dbus-x11 -y --no-install-recommends && ufw disable && service xrdp start && exec /entrypoint.sh"
+       apt update && apt install xrdp xorgxrdp dbus-x11 -y --no-install-recommends && ufw disable && chmod +x /home/ubuntu/.xsession && cp -rf /home/ubuntu/xrdp.ini /etc/xrdp/xrdp.ini && service xrdp start && exec /entrypoint.sh"
