@@ -28,9 +28,16 @@ git clone --recurse-submodules https://github.com/wing-kit/neo_humble_ws.git neo
 ### Start Up
 `docker compose up -d`
 
+### View log
+`docker logs -f ros2-humble`
 
-### NoVNC
+### Access the Desktop
+
+* NoVNC `export DISPLAY=":1"`
+
 After about a minute you should be able to use your host browser to visit http://localhost:36081 with password (See [docker-compose.yml](https://github.com/wing-kit/neo_humble/blob/main/docker-compose.yml))
+
+* xRDP (port 33390) `export DISPLAY=":10"`
 
 1. Open terminal and build the neobotix_workspace
   ```
