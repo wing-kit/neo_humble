@@ -2,9 +2,10 @@
 
 ## Purpose
 What this docker image offers
-1. NoVNC enabled (so that you can use just a browser to access the GUI desktop env)
-2. SSH enabled (so that you can even use remote dev in decent IDE)
-3. True cross-platform ROS2 dev ready (tested on MacOS 26 M3 arm64 and Ubuntu 20.04 x86)
+1. NoVNC enabled (so that you can use just a browser to access the GUI desktop env. `export DISPLAY=":1"`)
+2. xRDP enabled (so that you can use mstsc to access the GUI desktop env. `export DISPLAY=":10"`)
+3. SSH enabled (so that you can even use remote dev in decent IDE)
+4. True cross-platform ROS2 dev ready (tested on MacOS 26 M3 arm64 and Ubuntu 20.04 x86)
 
 
 ## Getting Started
