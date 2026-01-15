@@ -6,8 +6,10 @@ services:
       - "0.0.0.0:36081:80"
       - "0.0.0.0:32221:22"
       - "0.0.0.0:33081:8080"
+      - "0.0.0.0:33390:3389"
     cap_add:
       - NET_ADMIN
+      - SYS_ADMIN
     shm_size: '16g'
     security_opt:
       - seccomp:unconfined
@@ -19,6 +21,7 @@ services:
     environment:
       - USER=ubuntu
       - PASSWORD=123456   # ← CHANGE TO YOUR STRONG PASSWORD
+      - DEBIAN_FRONTEND=noninteractive
     entrypoint: ["/bin/bash", "-c"]
     command: |
       "mkdir -p /var/run/sshd && rm -rf /home/ubuntu/ws_* &&
@@ -29,4 +32,4 @@ services:
        chmod +x /home/ubuntu/ros2_ws/easytier/start.sh &&
        /home/ubuntu/ros2_ws/easytier/start.sh &
        /usr/bin/redis-server &
-       exec /entrypoint.sh"
+       apt update && apt install xrdp xorgxrdp dbus-x11 -y --no-install-recommends && ufw disable && service xrdp start && exec /entrypoint.sh"
